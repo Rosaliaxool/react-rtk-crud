@@ -24,7 +24,7 @@ function TaskForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (params.id) {
+    /*if (params.id) {
       dispatch(editTask({ ...task, id: params.id }));
     } else {
       dispatch(
@@ -35,15 +35,28 @@ function TaskForm() {
       );
     }
 
+    navigate("/");*/
+    if (params.id) {
+  const confirmEdit = window.confirm("¿Estás seguro de guardar esta tarea?");
+  if (confirmEdit) {
+    dispatch(editTask({ ...task, id: params.id }));
+    alert("Tarea editada correctamente.");
     navigate("/");
-  };
+  }
+} else {
+  dispatch(addTask({ ...task, id: uuid() }));
+  alert("Tarea creada correctamente.");
+  navigate("/");
+}
+};
+  
 
   useEffect(() => {
     if (params.id) {
       setTask(tasks.find((task) => task.id === params.id));
     }
   }, [params, tasks]);
-/*para el formulario */
+/*para el formulario  */
   return (
     <form onSubmit={handleSubmit} className="bg-zinc-800 max-w-sm p-4">
       <label className="block text-sm font-bold">Task:</label>

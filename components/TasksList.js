@@ -6,9 +6,18 @@ function TasksList() {
   const tasks = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
 
-  const handleDelete = (id) => {
+  /*const handleDelete = (id) => {
     dispatch(deleteTask(id));
-  };
+  };*/
+  const handleDelete = (id) => {
+  const confirmDelete = window.confirm("¿Estás seguro de querer eliminar esta tarea?");
+  if (confirmDelete) {
+    dispatch(deleteTask(id));
+    alert("Tarea eliminada correctamente.");
+  }
+ 
+};
+
 
   return (
     <div className="w-4/6">
@@ -17,26 +26,29 @@ function TasksList() {
 
         <Link
           to="/create-task"
-          className="bg-red-600 px-2 py-1 rounded-sm text-sm shadow-sm"
+          className="bg-blue-600 px-2 py-1 rounded-sm text-sm shadow-sm"
         >
           Create Task
         </Link>
       </header>
 
-      <div className="grid grid-cols-3 gap-3">
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {tasks.map((task) => (
-          <div className="bg-neutral-800 p-4 rounded-md" key={task.id}>
+          <div className="bg-slate-800 p-4 rounded-md" key={task.id}>
             <header className="flex justify-between">
               <h3 className="text-lg font-bold">{task.title}</h3>
               <div className="flex gap-x-2">
                 <Link
                   to={`/edit-task/${task.id}`}
-                  className="bg-zinc-600 px-2 py-1 text-xs rounded-md self-center"
+                  className="bg-blue-600 px-2 py-1 text-xs rounded-md self-center"
                 >
                   Edit
                 </Link>
                 <button
                   onClick={() => handleDelete(task.id)}
+
+
                   className="bg-red-500 px-2 py-1 text-xs rounded-md"
                 >
                   delete
@@ -53,8 +65,4 @@ function TasksList() {
 }
 
 export default TasksList;
-/*r
-<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-className="bg-red-600 px-2 py-1 rounded-sm text-sm shadow-sm"
-className="bg-red-500 px-2 py-1 text-xs rounded-md"
-*/
+/*r*/
